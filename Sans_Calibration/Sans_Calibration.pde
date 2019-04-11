@@ -11,10 +11,10 @@ ArrayList<Integer> oldsIds = new ArrayList<Integer>();
 ArrayList<Integer> colors = new ArrayList<Integer>();
 ArrayList<Integer> oldsColors = new ArrayList<Integer>();
 FingerList fl= new FingerList();
-static float zoom=0.8;
-
+static float zoom=1;
+static float zoom1=600;
 void setup() {
-  size(1400, 1000, P3D);
+  size(800, 600, P3D);
 
 }
 
@@ -40,11 +40,17 @@ void draw() {
      Hand_D h = new Hand_D(hands.get(i),oldsColors.get(i));
      colors.add(h.getColor());
      h.drawHand();
+     /*if(isPinched(h)){
+       h.setColort(color(random(0, 255), random(0, 255), random(0, 255)));
+     }*/
    }
    else {
     Hand_D h = new Hand_D(hands.get(i));
     colors.add(h.getColor());
     h.drawHand();
+    /*if(isPinched(h)){
+        h.setColort(color(random(0, 255), random(0, 255), random(0, 255)));
+     }*/
  }
   }
   for(int i = oldsIds.size() - 1; i >= 0; i--)
@@ -67,7 +73,7 @@ void draw() {
   {
    colors.remove(i); 
   }
-  
+ 
   
 }
 
@@ -88,6 +94,19 @@ boolean idExist(int id){
   return retour;
 }
 
+boolean isPinched(Hand_D h){
+  boolean retour=false;
+  int i=0;
+  //for(int j=0;j<8;j++){
+    print("dist entre = "+h.fl[0].joints[4].dist(h.fl[1].joints[7])+"\n");
+  //}
+   if(h.fl[3].joints[4].dist(h.fl[4].joints[7])<50){
+     print("PINCH\n");
+     retour = true;
+     
+   }
+  return retour;
+}
 
 
 void keyPressed() {

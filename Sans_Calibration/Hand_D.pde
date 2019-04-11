@@ -16,6 +16,7 @@ class Hand_D {
     float z = h.palmPosition().getZ();
      x = zoom*(map(x, -150, 150, 0, width));
     y = zoom*(height-map(y, 65, 275, 0, height));
+    z -=zoom1;
     palm = new Sphere(30, 25, colorH, new PVector(x, y, z));
     int i=0;
     for (Finger fi : h.fingers()) {
@@ -33,6 +34,7 @@ class Hand_D {
     float z = h.palmPosition().getZ();
     x = zoom*(map(x, -150, 150, 0, width));
     y = zoom*(height-map(y, 65, 275, 0, height));
+    z -=zoom1;
     palm = new Sphere(30, 15, colorH, new PVector(x, y, z));
     int i =0;
     for (Finger fi : h.fingers()) {
@@ -54,14 +56,28 @@ class Hand_D {
   color getColor() {
     return this.colorH;
   }
+  
+  void setColort(color col){
+    this.colorH=col;
+  }
 
   void drawHand() {
     drawPalm();
     drawfingers();
+    affichDistInterDoigts();
   }
 
   void drawPalm() {
     palm.drawSphere();
+  }
+  
+  void affichDistInterDoigts(){ 
+      for(int i=1;i<4;i++){
+        print(" ||entre doigt[0] doigt["+i+"]= "+fl[0].joints[3].dist(fl[i+1].joints[7]));
+    }
+    print(" ||entre doigt[0] doigt[4]= "+fl[0].joints[3].dist(fl[4].joints[7]));
+    print("\n");
+    
   }
 
   void drawfingers() {
