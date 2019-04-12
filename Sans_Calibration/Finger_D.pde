@@ -42,7 +42,7 @@ class Finger_D {
   void drawFinger() {
     for (int i=0; i<4; i++) {
       sl[i].drawSphere();
-      
+      drawPhalange(sl,i);
     }
     sl[7].drawSphere();
   }

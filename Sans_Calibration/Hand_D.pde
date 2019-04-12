@@ -64,7 +64,7 @@ class Hand_D {
   void drawHand() {
     drawPalm();
     drawfingers();
-    affichDistInterDoigts();
+    //affichDistInterDoigts();
   }
 
   void drawPalm() {

@@ -13,8 +13,14 @@ ArrayList<Integer> oldsColors = new ArrayList<Integer>();
 FingerList fl= new FingerList();
 static float zoom=1;
 static float zoom1=600;
+
+int[] alreadyPinch = new int[2];
+
+
 void setup() {
   size(800, 600, P3D);
+  alreadyPinch[0] = 0;
+  alreadyPinch[1] = 0;
 
 }
 
@@ -38,19 +44,29 @@ void draw() {
   for(int i = 0; i < handsCount; i++){
    if(idExist(hands.get(i).id())){
      Hand_D h = new Hand_D(hands.get(i),oldsColors.get(i));
-     colors.add(h.getColor());
-     h.drawHand();
-     /*if(isPinched(h)){
+     if(isPinched(h) && alreadyPinch[i] == 0){
        h.setColort(color(random(0, 255), random(0, 255), random(0, 255)));
-     }*/
+       alreadyPinch[i] = 1;
+     }
+     else if (!isPinched(h) && alreadyPinch[i] == 1)
+     {
+      alreadyPinch[i] = 0; 
+     }
+     h.drawHand();
+     colors.add(h.getColor());
    }
    else {
     Hand_D h = new Hand_D(hands.get(i));
-    colors.add(h.getColor());
-    h.drawHand();
-    /*if(isPinched(h)){
-        h.setColort(color(random(0, 255), random(0, 255), random(0, 255)));
-     }*/
+    if(isPinched(h) && alreadyPinch[i] == 0){
+       h.setColort(color(random(0, 255), random(0, 255), random(0, 255)));
+       alreadyPinch[i] = 1;
+     }
+     else if (!isPinched(h) && alreadyPinch[i] == 1)
+     {
+      alreadyPinch[i] = 0; 
+     }
+     h.drawHand();
+     colors.add(h.getColor());
  }
   }
   for(int i = oldsIds.size() - 1; i >= 0; i--)
@@ -96,11 +112,11 @@ boolean idExist(int id){
 
 boolean isPinched(Hand_D h){
   boolean retour=false;
-  int i=0;
+  //int i=0;
   //for(int j=0;j<8;j++){
-    print("dist entre = "+h.fl[0].joints[4].dist(h.fl[1].joints[7])+"\n");
+    print("dist entre = "+h.fl[0].joints[7].dist(h.fl[1].joints[7])+"\n");
   //}
-   if(h.fl[3].joints[4].dist(h.fl[4].joints[7])<50){
+   if(h.fl[0].joints[7].dist(h.fl[1].joints[7])<70){
      print("PINCH\n");
      retour = true;
      
